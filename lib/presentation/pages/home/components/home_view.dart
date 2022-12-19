@@ -11,7 +11,7 @@ class HomeView extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
         children: [
           const GCRPageHeader(title: 'DASHBOARD'),
