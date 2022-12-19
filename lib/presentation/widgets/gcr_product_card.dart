@@ -1,8 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
+import './widgets.dart';
+import '../utils/utils.dart';
+
 class GCRProductcard extends StatelessWidget {
-  const GCRProductcard({super.key});
+  const GCRProductcard.feed({
+    super.key,
+    this.type = ProductCardType.feed,
+  });
+
+  const GCRProductcard.order({
+    super.key,
+    this.type = ProductCardType.order,
+  });
+
+  final ProductCardType type;
+
+  @override
+  Widget build(BuildContext context) {
+    if (type == ProductCardType.feed) {
+      return const _ProductFeedCard();
+    }
+
+    if (type == ProductCardType.order) {
+      return const _ProductOrderCard();
+    }
+
+    return const SizedBox.shrink();
+  }
+}
+
+class _ProductFeedCard extends StatelessWidget {
+  const _ProductFeedCard({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +61,7 @@ class GCRProductcard extends StatelessWidget {
                       boxFit: BoxFit.contain,
                     ),
                   ),
-                  const _MenuButton(),
+                  const GCRPopupMenuButtons(),
                 ],
               ),
               Padding(
@@ -72,48 +104,59 @@ class GCRProductcard extends StatelessWidget {
   }
 }
 
-class _MenuButton extends StatelessWidget {
-  const _MenuButton({Key? key}) : super(key: key);
+class _ProductOrderCard extends StatelessWidget {
+  const _ProductOrderCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
-    return PopupMenuButton(
-      onSelected: (value) {},
-      icon: const Icon(Icons.more_vert),
-      itemBuilder: (ctx) => [
-        PopupMenuItem(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 3),
+      child: Material(
+        color: theme.cardColor,
+        child: InkWell(
+          onTap: () {},
           child: Row(
             children: [
-              const Icon(
-                Icons.edit,
-                color: Colors.teal,
+              const SizedBox(width: 20),
+              SizedBox(
+                width: 125,
+                height: 125,
+                child: FancyShimmerImage(
+                  imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+                  boxFit: BoxFit.contain,
+                ),
               ),
-              const SizedBox(width: 10),
-              Text(
-                'Edit',
-                style: textTheme.bodyText2,
+              const SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '12x for \$32.23',
+                    style: textTheme.headline6,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    'By: Cromuel Barut',
+                    style: textTheme.bodyText2!.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    formatDateTime(DateTime.now()),
+                    style: textTheme.bodyText2!.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
-        PopupMenuItem(
-          child: Row(
-            children: [
-              const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'Delete',
-                style: textTheme.bodyText2,
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

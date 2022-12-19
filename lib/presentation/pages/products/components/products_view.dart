@@ -41,7 +41,7 @@ class ProductsView extends StatelessWidget {
                 childAspectRatio: 425 / 450,
               ),
               itemBuilder: (ctx, idx) {
-                return const GCRProductcard();
+                return const GCRProductcard.feed();
               },
             ),
           ),
