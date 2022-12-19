@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_admin/business_logic/cubits/cubits.dart';
 
 import '../../../widgets/widgets.dart';
 
@@ -24,7 +25,7 @@ class HomeView extends StatelessWidget {
               ),
               const Spacer(),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => context.read<NavigationCubit>().changePage(1),
                 icon: const Icon(Icons.store),
                 label: const Text('View All'),
               ),

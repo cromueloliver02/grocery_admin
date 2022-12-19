@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../business_logic/cubits/cubits.dart';
 import '../pages.dart';
 import './components/home_view.dart';
 
@@ -9,7 +10,10 @@ class HomePage extends StatelessWidget {
   static Route<void> route(RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
-      builder: (ctx) => const HomePage(),
+      builder: (ctx) => BlocProvider<NavigationCubit>.value(
+        value: ctx.read<NavigationCubit>(),
+        child: const HomePage(),
+      ),
     );
   }
 
