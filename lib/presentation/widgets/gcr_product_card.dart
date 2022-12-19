@@ -10,7 +10,7 @@ class GCRProductcard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Material(
-      color: theme.cardColor,
+      color: theme.canvasColor,
       child: InkWell(
         onTap: () {},
         child: SizedBox(
