@@ -17,6 +17,10 @@ class NavigationView extends StatelessWidget {
     ctx.read<NavigationCubit>().changePage(idx);
   }
 
+  void _toggleTheme(BuildContext ctx) {
+    ctx.read<ThemeCubit>().toggleTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,16 +60,19 @@ class NavigationView extends StatelessWidget {
                   ),
                   title: const Text('Orders'),
                 ),
-                ListTile(
-                  onTap: () {},
-                  leading: const Icon(
-                    Icons.light_mode,
-                    size: 30,
-                  ),
-                  title: const Text('Dark Mode'),
-                  trailing: Switch(
-                    onChanged: (value) {},
-                    value: false,
+                BlocBuilder<ThemeCubit, ThemeState>(
+                  builder: (ctx, state) => ListTile(
+                    leading: Icon(
+                      state.themeMode == ThemeMode.light
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                      size: 30,
+                    ),
+                    title: const Text('Dark Mode'),
+                    trailing: Switch(
+                      onChanged: (value) => _toggleTheme(context),
+                      value: state.themeMode != ThemeMode.light,
+                    ),
                   ),
                 ),
               ],

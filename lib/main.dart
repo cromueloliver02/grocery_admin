@@ -6,5 +6,7 @@ import './presentation/grocery_app.dart';
 void main() {
   runApp(GroceryApp(
     routerHandler: RouteHandler(),
+    blocHandler: BlocHandler(),
+    themeHandler: ThemeHandler(),
   ));
 }
