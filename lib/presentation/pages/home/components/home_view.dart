@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../widgets/widgets.dart';
 import './search_bar.dart';
 
 class HomeView extends StatelessWidget {
@@ -10,26 +11,35 @@ class HomeView extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'DASHBOARD',
-                style: textTheme.headline4,
-              ),
-              const SearchBar(),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'DASHBOARD',
+                  style: textTheme.headline4,
+                ),
+                const SearchBar(),
+              ],
+            ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(20),
-          child: SizedBox.shrink(),
-        ),
-      ],
+          SizedBox(
+            height: 285,
+            child: ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: 4,
+              separatorBuilder: (ctx, idx) => const SizedBox(width: 20),
+              itemBuilder: (ctx, idx) => const GCRProductcard(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -31,6 +31,7 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
+  fancy_shimmer_image: ^2.0.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
