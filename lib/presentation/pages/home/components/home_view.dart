@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../widgets/widgets.dart';
-import './search_bar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -15,16 +14,7 @@ class HomeView extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'DASHBOARD',
-                style: textTheme.headline4,
-              ),
-              const SearchBar(),
-            ],
-          ),
+          const GCRPageHeader(title: 'DASHBOARD'),
           const SizedBox(height: 20),
           Row(
             children: [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({super.key});
+class GCRSearchTextField extends StatelessWidget {
+  const GCRSearchTextField({super.key});
 
   @override
   Widget build(BuildContext context) {
