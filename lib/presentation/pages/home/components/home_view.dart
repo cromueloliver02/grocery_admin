@@ -105,22 +105,6 @@ class HomeView extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 3),
                   child: const GCRProductcard.order(),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
-                ),
               ],
             ),
           ],
