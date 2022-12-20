@@ -112,49 +112,46 @@ class _ProductOrderCard extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 3),
-      child: Material(
-        color: theme.cardColor,
-        child: InkWell(
-          onTap: () {},
-          child: Row(
-            children: [
-              const SizedBox(width: 20),
-              SizedBox(
-                width: 125,
-                height: 125,
-                child: FancyShimmerImage(
-                  imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
-                  boxFit: BoxFit.contain,
+    return Material(
+      color: theme.cardColor,
+      child: InkWell(
+        onTap: () {},
+        child: Row(
+          children: [
+            const SizedBox(width: 20),
+            SizedBox(
+              width: 125,
+              height: 125,
+              child: FancyShimmerImage(
+                imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+                boxFit: BoxFit.contain,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '12x for \$32.23',
+                  style: textTheme.headline6,
                 ),
-              ),
-              const SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '12x for \$32.23',
-                    style: textTheme.headline6,
+                const SizedBox(height: 5),
+                Text(
+                  'By: Cromuel Barut',
+                  style: textTheme.bodyText2!.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    'By: Cromuel Barut',
-                    style: textTheme.bodyText2!.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  formatDateTime(DateTime.now()),
+                  style: textTheme.bodyText2!.copyWith(
+                    color: Colors.grey,
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    formatDateTime(DateTime.now()),
-                    style: textTheme.bodyText2!.copyWith(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

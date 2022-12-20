@@ -46,12 +46,27 @@ class HomeView extends StatelessWidget {
             const SizedBox(height: 20),
             SizedBox(
               height: 285,
-              child: ListView.separated(
+              child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: 4,
-                separatorBuilder: (ctx, idx) => const SizedBox(width: 20),
-                itemBuilder: (ctx, idx) => const GCRProductcard.feed(),
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: const GCRProductcard.feed(),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: const GCRProductcard.feed(),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: const GCRProductcard.feed(),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: const GCRProductcard.feed(),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 50),
@@ -73,16 +88,39 @@ class HomeView extends StatelessWidget {
             ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
-                GCRProductcard.order(),
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: const GCRProductcard.order(),
+                ),
               ],
             ),
           ],
