@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../business_logic/cubits/cubits.dart';
 import '../../../widgets/widgets.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class DashboardView extends StatelessWidget {
+  const DashboardView({super.key});
 
   void _changePage(BuildContext ctx, {required int idx}) {
     ctx.read<NavigationCubit>().changePage(idx);

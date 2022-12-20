@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../../../business_logic/cubits/cubits.dart';
 import '../pages.dart';
-import './components/home_view.dart';
+import './components/dashboard_view.dart';
 
-class HomePage extends StatelessWidget {
-  static const id = '${NavigationPage.id}/home';
+class DashboardPage extends StatelessWidget {
+  static const id = '${NavigationPage.id}/dashboard';
 
   static Route<void> route(RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
       builder: (ctx) => BlocProvider<NavigationCubit>.value(
         value: ctx.read<NavigationCubit>(),
-        child: const HomePage(),
+        child: const DashboardPage(),
       ),
     );
   }
 
-  const HomePage({super.key});
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const HomeView();
+    return const DashboardView();
   }
 }

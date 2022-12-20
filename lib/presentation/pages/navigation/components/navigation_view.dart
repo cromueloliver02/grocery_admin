@@ -8,7 +8,7 @@ class NavigationView extends StatelessWidget {
   const NavigationView({super.key});
 
   final _pages = const [
-    HomePage(),
+    DashboardPage(),
     ProductsPage(),
     OrdersPage(),
   ];

@@ -30,10 +30,10 @@ class SideBarMenu extends StatelessWidget {
             ListTile(
               selected: state.currentIdx == 0,
               leading: const Icon(
-                Icons.home_filled,
+                Icons.dashboard,
                 size: 30,
               ),
-              title: const Text('Home'),
+              title: const Text('Dashboard'),
               onTap: () => _changePage(context, idx: 0),
             ),
             ListTile(
