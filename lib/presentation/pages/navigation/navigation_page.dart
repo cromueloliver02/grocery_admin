@@ -4,7 +4,7 @@ import '../../../business_logic/cubits/cubits.dart';
 import './components/navigation_view.dart';
 
 class NavigationPage extends StatelessWidget {
-  static const id = '/navigation';
+  static const id = '/';
 
   static Route<void> route(RouteSettings settings) {
     return MaterialPageRoute(
