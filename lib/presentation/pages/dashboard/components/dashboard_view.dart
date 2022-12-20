@@ -52,19 +52,28 @@ class DashboardView extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
-                    child: const GCRProductcard.feed(),
+                    child: const GCRProductcard.feed(
+                      price: 7.35,
+                      salePrice: 6.86,
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
-                    child: const GCRProductcard.feed(),
+                    child: const GCRProductcard.feed(price: 9.56),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
-                    child: const GCRProductcard.feed(),
+                    child: const GCRProductcard.feed(
+                      price: 7.74,
+                      salePrice: 7.87,
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
-                    child: const GCRProductcard.feed(),
+                    child: const GCRProductcard.feed(
+                      price: 2.64,
+                      salePrice: 2.46,
+                    ),
                   ),
                 ],
               ),
@@ -91,19 +100,19 @@ class DashboardView extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
+                  child: const GCRProductcard.order(price: 4.38),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
+                  child: const GCRProductcard.order(price: 6.82),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
+                  child: const GCRProductcard.order(price: 2.97),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 3),
-                  child: const GCRProductcard.order(),
+                  child: const GCRProductcard.order(price: 8.86),
                 ),
               ],
             ),

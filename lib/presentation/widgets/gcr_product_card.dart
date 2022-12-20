@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
@@ -7,24 +9,33 @@ import '../utils/utils.dart';
 class GCRProductcard extends StatelessWidget {
   const GCRProductcard.feed({
     super.key,
+    required this.price,
+    this.salePrice,
     this.type = ProductCardType.feed,
   });
 
   const GCRProductcard.order({
     super.key,
+    required this.price,
+    this.salePrice,
     this.type = ProductCardType.order,
   });
 
+  final double price;
+  final double? salePrice;
   final ProductCardType type;
 
   @override
   Widget build(BuildContext context) {
     if (type == ProductCardType.feed) {
-      return const _ProductFeedCard();
+      return _ProductFeedCard(
+        price: price,
+        salePrice: salePrice,
+      );
     }
 
     if (type == ProductCardType.order) {
-      return const _ProductOrderCard();
+      return _ProductOrderCard(price: price);
     }
 
     return const SizedBox.shrink();
@@ -34,7 +45,12 @@ class GCRProductcard extends StatelessWidget {
 class _ProductFeedCard extends StatelessWidget {
   const _ProductFeedCard({
     Key? key,
+    required this.price,
+    this.salePrice,
   }) : super(key: key);
+
+  final double price;
+  final double? salePrice;
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +89,27 @@ class _ProductFeedCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '\$4.83',
-                          style: textTheme.headline5,
-                        ),
+                        if (salePrice == null)
+                          Text(
+                            '\$$price',
+                            style: textTheme.headline4,
+                          ),
+                        if (salePrice != null) ...[
+                          Text(
+                            '\$$salePrice',
+                            style: textTheme.headline4,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '\$$price',
+                            style: textTheme.headline6!.copyWith(
+                              color: Colors.grey[600],
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
+                        const Spacer(),
                         Text(
                           '1KG',
                           style: textTheme.headline5,
@@ -105,7 +136,12 @@ class _ProductFeedCard extends StatelessWidget {
 }
 
 class _ProductOrderCard extends StatelessWidget {
-  const _ProductOrderCard({Key? key}) : super(key: key);
+  const _ProductOrderCard({
+    Key? key,
+    required this.price,
+  }) : super(key: key);
+
+  final double price;
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +168,7 @@ class _ProductOrderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '12x for \$32.23',
+                  '12x for \$$price',
                   style: textTheme.headline6,
                 ),
                 const SizedBox(height: 5),

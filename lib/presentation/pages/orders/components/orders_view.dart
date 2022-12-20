@@ -38,7 +38,9 @@ class OrdersView extends StatelessWidget {
               itemCount: 20,
               padding: const EdgeInsets.only(bottom: 20),
               separatorBuilder: (ctx, idx) => const SizedBox(height: 6),
-              itemBuilder: (ctx, idx) => const GCRProductcard.order(),
+              itemBuilder: (ctx, idx) => const GCRProductcard.order(
+                price: 8.36,
+              ),
             ),
           ),
         ],

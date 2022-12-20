@@ -40,9 +40,7 @@ class ProductsView extends StatelessWidget {
                 crossAxisSpacing: 10,
                 childAspectRatio: 425 / 450,
               ),
-              itemBuilder: (ctx, idx) {
-                return const GCRProductcard.feed();
-              },
+              itemBuilder: (ctx, idx) => const GCRProductcard.feed(price: 5.39),
             ),
           ),
         ],
