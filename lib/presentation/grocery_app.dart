@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../business_logic/cubits/cubits.dart';
+import './pages/pages.dart';
 import './utils/utils.dart';
 
 class GroceryApp extends StatelessWidget {
@@ -26,6 +27,7 @@ class GroceryApp extends StatelessWidget {
           theme: themeHandler.lightTheme,
           darkTheme: themeHandler.darkTheme,
           debugShowCheckedModeBanner: false,
+          initialRoute: NavigationPage.id,
           onGenerateRoute: routerHandler.onGenerateRoute,
         ),
       ),
