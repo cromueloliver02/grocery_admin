@@ -35,12 +35,6 @@ class DashboardView extends StatelessWidget {
                   icon: const Icon(Icons.store),
                   label: const Text('View All'),
                 ),
-                const SizedBox(width: 10),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add Product'),
-                ),
               ],
             ),
             const SizedBox(height: 20),

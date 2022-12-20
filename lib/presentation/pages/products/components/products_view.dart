@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../widgets/widgets.dart';
+import '../../../pages/pages.dart';
 
 class ProductsView extends StatelessWidget {
   const ProductsView({super.key});
+
+  void _goToProductFormPage(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(ProductFormPage.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class ProductsView extends StatelessWidget {
               const Spacer(),
               const SizedBox(width: 10),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => _goToProductFormPage(context),
                 icon: const Icon(Icons.add),
                 label: const Text('Add Product'),
               ),
