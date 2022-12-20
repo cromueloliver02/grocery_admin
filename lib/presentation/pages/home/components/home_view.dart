@@ -6,6 +6,10 @@ import '../../../widgets/widgets.dart';
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
+  void _changePage(BuildContext ctx, {required int idx}) {
+    ctx.read<NavigationCubit>().changePage(idx);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -27,8 +31,7 @@ class HomeView extends StatelessWidget {
                 ),
                 const Spacer(),
                 ElevatedButton.icon(
-                  onPressed: () =>
-                      context.read<NavigationCubit>().changePage(1),
+                  onPressed: () => _changePage(context, idx: 1),
                   icon: const Icon(Icons.store),
                   label: const Text('View All'),
                 ),
@@ -52,9 +55,19 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
-            Text(
-              'Latest Orders',
-              style: textTheme.headline5,
+            Row(
+              children: [
+                Text(
+                  'Latest Orders',
+                  style: textTheme.headline5,
+                ),
+                const Spacer(),
+                ElevatedButton.icon(
+                  onPressed: () => _changePage(context, idx: 2),
+                  icon: const Icon(Icons.store),
+                  label: const Text('View All'),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             ListView(
