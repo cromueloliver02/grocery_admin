@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import './category_dropdown.dart';
 import './gender_selector.dart';
+import './image_picker.dart';
 
 class ProductFormView extends StatelessWidget {
   const ProductFormView({super.key});
@@ -55,15 +56,9 @@ class ProductFormView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Expanded(
+                  const Expanded(
                     flex: 2,
-                    child: Container(
-                      color: Colors.grey,
-                      padding: const EdgeInsets.symmetric(vertical: 40),
-                      child: const Center(
-                        child: Text('IMAGE PICKER'),
-                      ),
-                    ),
+                    child: ImagePicker(),
                   ),
                 ],
               ),
