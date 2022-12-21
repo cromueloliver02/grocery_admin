@@ -11,7 +11,13 @@ class ImageViewer extends StatelessWidget {
 
   final Uint8List image;
 
-  void _pickImage(BuildContext ctx) => ctx.read<ImagePickerCubit>().pickImage();
+  void _pickImage(BuildContext ctx) {
+    ctx.read<ImagePickerCubit>().pickImage();
+  }
+
+  void _clearImage(BuildContext ctx) {
+    ctx.read<ImagePickerCubit>().clearImage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +39,30 @@ class ImageViewer extends StatelessWidget {
 
             return Column(
               children: [
-                const SizedBox(height: 5),
-                TextButton(
-                  onPressed: () => _pickImage(context),
-                  child: Text(
-                    'Change image',
-                    style: textTheme.bodyText2!.copyWith(
-                      color: Colors.blue,
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () => _clearImage(context),
+                      child: Text(
+                        'Clear Image',
+                        style: textTheme.bodyText2!.copyWith(
+                          color: Colors.red,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 20),
+                    TextButton(
+                      onPressed: () => _pickImage(context),
+                      child: Text(
+                        'Change Image',
+                        style: textTheme.bodyText2!.copyWith(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             );

@@ -18,10 +18,11 @@ class ImagePickerState extends Equatable {
   String toString() => 'ImagePickerState(selectedImage: $selectedImage)';
 
   ImagePickerState copyWith({
-    Uint8List? selectedImage,
+    Uint8List? Function()? selectedImage,
   }) {
     return ImagePickerState(
-      selectedImage: selectedImage ?? this.selectedImage,
+      selectedImage:
+          selectedImage != null ? selectedImage() : this.selectedImage,
     );
   }
 }

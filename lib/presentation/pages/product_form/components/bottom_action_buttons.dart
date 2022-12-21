@@ -6,7 +6,7 @@ class BottomActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
           onPressed: () {},
@@ -15,6 +15,7 @@ class BottomActionButtons extends StatelessWidget {
           ),
           child: const Text('Clear Form'),
         ),
+        const SizedBox(width: 50),
         ElevatedButton(
           onPressed: () {},
           child: const Text('Upload'),

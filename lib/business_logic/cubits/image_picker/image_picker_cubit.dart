@@ -16,6 +16,8 @@ class ImagePickerCubit extends Cubit<ImagePickerState> {
   void pickImage() async {
     final Uint8List? image = await imagePickerRepository.pickImage();
 
-    emit(state.copyWith(selectedImage: image));
+    emit(state.copyWith(selectedImage: () => image));
   }
+
+  void clearImage() => emit(state.copyWith(selectedImage: () => null));
 }
