@@ -51,7 +51,7 @@ class ProductFormView extends StatelessWidget {
                         const SizedBox(height: 10),
                         const CategoryDropdown(),
                         const SizedBox(height: 15),
-                        const GenderSelector(),
+                        const MeasureUnitSelector(),
                       ],
                     ),
                   ),

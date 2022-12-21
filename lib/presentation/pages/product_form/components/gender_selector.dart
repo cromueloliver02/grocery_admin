@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/utils.dart';
 
-class GenderSelector extends StatefulWidget {
-  const GenderSelector({super.key});
+class MeasureUnitSelector extends StatefulWidget {
+  const MeasureUnitSelector({super.key});
 
   @override
-  State<GenderSelector> createState() => _GenderSelectorState();
+  State<MeasureUnitSelector> createState() => _GenderSelectorState();
 }
 
-class _GenderSelectorState extends State<GenderSelector> {
+class _GenderSelectorState extends State<MeasureUnitSelector> {
   MeasureUnit _selectedGender = MeasureUnit.kg;
 
   void _genderOnChanged(MeasureUnit? value) {
