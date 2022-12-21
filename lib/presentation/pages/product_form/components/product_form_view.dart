@@ -6,7 +6,7 @@ import './category_dropdown.dart';
 import './measure_unit_selector.dart';
 import './image_picker.dart';
 import './image_viewer.dart';
-import './action_buttons.dart';
+import './bottom_action_buttons.dart';
 
 class ProductFormView extends StatelessWidget {
   const ProductFormView({super.key});
@@ -90,7 +90,7 @@ class ProductFormView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              const ActionButtons(),
+              const BottomActionButtons(),
             ],
           ),
         ),
