@@ -11,8 +11,15 @@ class ProductFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Create/Edit Product',
+          style: textTheme.headline5,
+        ),
+      ),
       body: Center(
         child: Container(
           color: theme.cardColor,
@@ -22,6 +29,14 @@ class ProductFormView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Product Form',
+                  style: textTheme.headline4,
+                ),
+              ),
+              const SizedBox(height: 30),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Name',
