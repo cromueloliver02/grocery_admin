@@ -6,7 +6,7 @@ import '../../../../business_logic/cubits/cubits.dart';
 class ImagePicker extends StatelessWidget {
   const ImagePicker({super.key});
 
-  void _pickImage(BuildContext ctx) => ctx.read<ImagePickerCubit>().pickImage();
+  void _pickImage(BuildContext ctx) => ctx.read<ProductFormCubit>().pickImage();
 
   @override
   Widget build(BuildContext context) {

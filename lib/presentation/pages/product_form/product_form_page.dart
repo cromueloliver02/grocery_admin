@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_admin/data/services/services.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../data/services/services.dart';
 import '../../../data/repositories/repositories.dart';
 import '../../../business_logic/cubits/cubits.dart';
 import './components/product_form_view.dart';
@@ -18,8 +18,8 @@ class ProductFormPage extends StatelessWidget {
             imagePicker: ImagePicker(),
           ),
         ),
-        child: BlocProvider<ImagePickerCubit>(
-          create: (ctx) => ImagePickerCubit(
+        child: BlocProvider<ProductFormCubit>(
+          create: (ctx) => ProductFormCubit(
             imagePickerRepository: ctx.read<ImagePickerRepository>(),
           ),
           child: const ProductFormPage(),

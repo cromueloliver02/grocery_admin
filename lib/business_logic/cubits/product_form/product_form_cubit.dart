@@ -3,15 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/repositories/repositories.dart';
+import '../../../presentation/utils/utils.dart';
 
-part 'image_picker_state.dart';
+part 'product_form_state.dart';
 
-class ImagePickerCubit extends Cubit<ImagePickerState> {
+class ProductFormCubit extends Cubit<ProductFormState> {
   final ImagePickerRepository imagePickerRepository;
 
-  ImagePickerCubit({
+  ProductFormCubit({
     required this.imagePickerRepository,
-  }) : super(ImagePickerState.initial());
+  }) : super(ProductFormState.initial());
+
+  void changeCategory(String? value) {
+    emit(state.copyWith(selectedCategory: () => value));
+  }
+
+  void changeMeasureUnit(MeasureUnit? value) {
+    emit(state.copyWith(selectedMeasureUnit: value));
+  }
 
   void pickImage() async {
     final Uint8List? image = await imagePickerRepository.pickImage();

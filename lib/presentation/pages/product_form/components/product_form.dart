@@ -19,25 +19,19 @@ class ProductForm extends StatefulWidget {
 class _ProductFormState extends State<ProductForm> {
   late final TextEditingController _nameController;
   late final TextEditingController _priceController;
-  String? _selectedCategory;
-  MeasureUnit _selectedMeasureUnit = MeasureUnit.kg;
 
   void _onClearForm(BuildContext ctx) {
     _nameController.clear();
     _priceController.clear();
-    ctx.read<ImagePickerCubit>().clearImage();
-    setState(() {
-      _selectedCategory = null;
-      _selectedMeasureUnit = MeasureUnit.kg;
-    });
+    ctx.read<ProductFormCubit>().clearImage();
   }
 
   void _onCategoryChanged(String? value) {
-    setState(() => _selectedCategory = value);
+    context.read<ProductFormCubit>().changeCategory(value);
   }
 
   void _onMeasureUnitChanged(MeasureUnit? value) {
-    setState(() => _selectedMeasureUnit = value!);
+    context.read<ProductFormCubit>().changeMeasureUnit(value);
   }
 
   @override
@@ -86,22 +80,28 @@ class _ProductFormState extends State<ProductForm> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  CategoryDropdown(
-                    selectedCategory: _selectedCategory,
-                    onCategoryChanged: _onCategoryChanged,
-                  ),
-                  const SizedBox(height: 15),
-                  MeasureUnitSelector(
-                    selectedMeasureUnit: _selectedMeasureUnit,
-                    onMeasureUnitChanged: _onMeasureUnitChanged,
-                  ),
+                  BlocBuilder<ProductFormCubit, ProductFormState>(
+                    builder: (ctx, state) => Column(
+                      children: [
+                        CategoryDropdown(
+                          selectedCategory: state.selectedCategory,
+                          onCategoryChanged: _onCategoryChanged,
+                        ),
+                        const SizedBox(height: 15),
+                        MeasureUnitSelector(
+                          selectedMeasureUnit: state.selectedMeasureUnit,
+                          onMeasureUnitChanged: _onMeasureUnitChanged,
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               flex: 2,
-              child: BlocBuilder<ImagePickerCubit, ImagePickerState>(
+              child: BlocBuilder<ProductFormCubit, ProductFormState>(
                 builder: (ctx, state) {
                   if (state.selectedImage != null) {
                     return ImageViewer(image: state.selectedImage!);

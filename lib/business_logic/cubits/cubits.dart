@@ -2,4 +2,4 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 
 export './navigation/navigation_cubit.dart';
 export './theme/theme_cubit.dart';
-export './image_picker/image_picker_cubit.dart';
+export './product_form/product_form_cubit.dart';

@@ -12,11 +12,11 @@ class ImageViewer extends StatelessWidget {
   final Uint8List image;
 
   void _pickImage(BuildContext ctx) {
-    ctx.read<ImagePickerCubit>().pickImage();
+    ctx.read<ProductFormCubit>().pickImage();
   }
 
   void _clearImage(BuildContext ctx) {
-    ctx.read<ImagePickerCubit>().clearImage();
+    ctx.read<ProductFormCubit>().clearImage();
   }
 
   @override
@@ -33,7 +33,7 @@ class ImageViewer extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        BlocBuilder<ImagePickerCubit, ImagePickerState>(
+        BlocBuilder<ProductFormCubit, ProductFormState>(
           builder: (ctx, state) {
             if (state.selectedImage == null) return const SizedBox.shrink();
 
