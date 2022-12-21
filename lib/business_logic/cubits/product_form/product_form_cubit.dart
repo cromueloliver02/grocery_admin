@@ -29,4 +29,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   }
 
   void clearImage() => emit(state.copyWith(selectedImage: () => null));
+
+  void clearAll() => emit(ProductFormState.initial());
 }

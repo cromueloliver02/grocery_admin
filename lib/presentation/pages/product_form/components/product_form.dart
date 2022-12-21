@@ -23,7 +23,7 @@ class _ProductFormState extends State<ProductForm> {
   void _onClearForm(BuildContext ctx) {
     _nameController.clear();
     _priceController.clear();
-    ctx.read<ProductFormCubit>().clearImage();
+    ctx.read<ProductFormCubit>().clearAll();
   }
 
   void _onCategoryChanged(String? value) {
