@@ -10,9 +10,9 @@ class GenderSelector extends StatefulWidget {
 }
 
 class _GenderSelectorState extends State<GenderSelector> {
-  Gender _selectedGender = Gender.male;
+  MeasureUnit _selectedGender = MeasureUnit.kg;
 
-  void _genderOnChanged(Gender? value) {
+  void _genderOnChanged(MeasureUnit? value) {
     setState(() => _selectedGender = value!);
   }
 
@@ -31,23 +31,23 @@ class _GenderSelectorState extends State<GenderSelector> {
             style: textTheme.bodyText1,
           ),
         ),
-        RadioListTile<Gender>(
+        RadioListTile<MeasureUnit>(
           title: Text(
-            'Male',
+            'KG',
             style: textTheme.bodyText2,
           ),
           dense: true,
-          value: Gender.male,
+          value: MeasureUnit.kg,
           groupValue: _selectedGender,
           onChanged: _genderOnChanged,
         ),
-        RadioListTile<Gender>(
+        RadioListTile<MeasureUnit>(
           title: Text(
-            'Female',
+            'Piece',
             style: textTheme.bodyText2,
           ),
           dense: true,
-          value: Gender.female,
+          value: MeasureUnit.piece,
           groupValue: _selectedGender,
           onChanged: _genderOnChanged,
         ),

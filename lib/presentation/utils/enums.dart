@@ -1,3 +1,3 @@
 enum ProductCardType { feed, order }
 
-enum Gender { male, female }
+enum MeasureUnit { kg, piece }
