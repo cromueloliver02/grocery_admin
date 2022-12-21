@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_admin/data/services/services.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../data/repositories/repositories.dart';
+import '../../../business_logic/cubits/cubits.dart';
 import './components/product_form_view.dart';
 
 class ProductFormPage extends StatelessWidget {
@@ -8,7 +12,19 @@ class ProductFormPage extends StatelessWidget {
   static Route<void> route(RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
-      builder: (ctx) => const ProductFormPage(),
+      builder: (ctx) => RepositoryProvider<ImagePickerRepository>(
+        create: (ctx) => ImagePickerRepository(
+          imagePickerService: ImagePickerService(
+            imagePicker: ImagePicker(),
+          ),
+        ),
+        child: BlocProvider<ImagePickerCubit>(
+          create: (ctx) => ImagePickerCubit(
+            imagePickerRepository: ctx.read<ImagePickerRepository>(),
+          ),
+          child: const ProductFormPage(),
+        ),
+      ),
     );
   }
 

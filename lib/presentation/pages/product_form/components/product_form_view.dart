@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../business_logic/cubits/cubits.dart';
 import './category_dropdown.dart';
-import './gender_selector.dart';
+import './measure_unit_selector.dart';
 import './image_picker.dart';
+import './image_viewer.dart';
+import './action_buttons.dart';
 
 class ProductFormView extends StatelessWidget {
   const ProductFormView({super.key});
@@ -23,7 +26,7 @@ class ProductFormView extends StatelessWidget {
       body: Center(
         child: Container(
           color: theme.cardColor,
-          width: 600,
+          width: 800,
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +50,7 @@ class ProductFormView extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
@@ -71,29 +75,22 @@ class ProductFormView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Expanded(
+                  Expanded(
                     flex: 2,
-                    child: ImagePicker(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                    child: BlocBuilder<ImagePickerCubit, ImagePickerState>(
+                      builder: (ctx, state) {
+                        if (state.selectedImage != null) {
+                          return ImageViewer(image: state.selectedImage!);
+                        }
+
+                        return const ImagePicker();
+                      },
                     ),
-                    child: const Text('Clear Form'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Upload'),
                   ),
                 ],
               ),
+              const SizedBox(height: 30),
+              const ActionButtons(),
             ],
           ),
         ),
