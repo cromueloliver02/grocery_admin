@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BottomActionButtons extends StatelessWidget {
-  const BottomActionButtons({super.key});
+  const BottomActionButtons({
+    super.key,
+    required this.onClearForm,
+  });
+
+  final void Function(BuildContext) onClearForm;
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +14,7 @@ class BottomActionButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () => onClearForm(context),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red,
           ),

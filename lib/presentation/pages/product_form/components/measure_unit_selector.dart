@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/utils.dart';
 
-class MeasureUnitSelector extends StatefulWidget {
-  const MeasureUnitSelector({super.key});
+class MeasureUnitSelector extends StatelessWidget {
+  const MeasureUnitSelector({
+    super.key,
+    required this.selectedMeasureUnit,
+    required this.onMeasureUnitChanged,
+  });
 
-  @override
-  State<MeasureUnitSelector> createState() => _GenderSelectorState();
-}
-
-class _GenderSelectorState extends State<MeasureUnitSelector> {
-  MeasureUnit _selectedGender = MeasureUnit.kg;
-
-  void _genderOnChanged(MeasureUnit? value) {
-    setState(() => _selectedGender = value!);
-  }
+  final MeasureUnit selectedMeasureUnit;
+  final void Function(MeasureUnit?) onMeasureUnitChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +34,8 @@ class _GenderSelectorState extends State<MeasureUnitSelector> {
           ),
           dense: true,
           value: MeasureUnit.kg,
-          groupValue: _selectedGender,
-          onChanged: _genderOnChanged,
+          groupValue: selectedMeasureUnit,
+          onChanged: onMeasureUnitChanged,
         ),
         RadioListTile<MeasureUnit>(
           title: Text(
@@ -48,8 +44,8 @@ class _GenderSelectorState extends State<MeasureUnitSelector> {
           ),
           dense: true,
           value: MeasureUnit.piece,
-          groupValue: _selectedGender,
-          onChanged: _genderOnChanged,
+          groupValue: selectedMeasureUnit,
+          onChanged: onMeasureUnitChanged,
         ),
       ],
     );
