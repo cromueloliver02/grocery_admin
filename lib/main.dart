@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './presentation/utils/utils.dart';
-import './presentation/grocery_app.dart';
+import './utils/utils.dart';
+import './grocery_app.dart';
 
 void main() {
   runApp(GroceryApp(

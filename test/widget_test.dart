@@ -8,8 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:grocery_admin/presentation/grocery_app.dart';
-import 'package:grocery_admin/presentation/utils/utils.dart';
+import 'package:grocery_admin/grocery_app.dart';
+import 'package:grocery_admin/utils/utils.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

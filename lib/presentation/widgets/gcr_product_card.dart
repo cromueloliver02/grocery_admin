@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 import './widgets.dart';
-import '../utils/utils.dart';
+import '../../utils/utils.dart';
 
 class GCRProductcard extends StatelessWidget {
   const GCRProductcard.feed({

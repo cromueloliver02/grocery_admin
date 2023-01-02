@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../business_logic/cubits/cubits.dart';
-import '../../../utils/utils.dart';
+import '../../../../utils/utils.dart';
 import './category_dropdown.dart';
 import './measure_unit_selector.dart';
 import './image_picker.dart';

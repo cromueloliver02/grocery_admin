@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../business_logic/cubits/cubits.dart';
-import './pages/pages.dart';
+import './business_logic/cubits/cubits.dart';
+import './presentation/pages/pages.dart';
 import './utils/utils.dart';
 
 class GroceryApp extends StatelessWidget {
