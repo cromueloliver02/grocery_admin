@@ -1,0 +1,1 @@
+const String kProductsCollectionPath = 'products';

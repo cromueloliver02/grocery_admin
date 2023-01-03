@@ -15,7 +15,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   }) : super(ProductFormState.initial());
 
   void changeCategory(String? value) {
-    emit(state.copyWith(selectedCategory: () => value));
+    emit(state.copyWith(selectedCategory: value));
   }
 
   void changeMeasureUnit(MeasureUnit? value) {

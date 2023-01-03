@@ -7,7 +7,7 @@ class CategoryDropdown extends StatelessWidget {
     required this.onCategoryChanged,
   });
 
-  final String? selectedCategory;
+  final String selectedCategory;
   final void Function(String?) onCategoryChanged;
 
   @override

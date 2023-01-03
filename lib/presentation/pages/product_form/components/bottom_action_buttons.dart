@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class BottomActionButtons extends StatelessWidget {
   const BottomActionButtons({
     super.key,
+    required this.onSubmit,
     required this.onClearForm,
   });
 
+  final VoidCallback onSubmit;
   final void Function(BuildContext) onClearForm;
 
   @override
@@ -22,7 +24,7 @@ class BottomActionButtons extends StatelessWidget {
         ),
         const SizedBox(width: 50),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: onSubmit,
           child: const Text('Upload'),
         ),
       ],
