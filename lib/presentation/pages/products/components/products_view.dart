@@ -40,18 +40,24 @@ class ProductsView extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: BlocBuilder<ProductListBloc, ProductListState>(
-              builder: (ctx, state) => GridView.builder(
-                itemCount: state.productList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 425 / 450,
-                ),
-                itemBuilder: (ctx, idx) => GCRProductcard.feed(
-                  product: state.productList[idx],
-                ),
-              ),
+              builder: (ctx, state) {
+                if (state.productList.isEmpty) {
+                  return const GCRMessageCard();
+                }
+
+                return GridView.builder(
+                  itemCount: state.productList.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 425 / 450,
+                  ),
+                  itemBuilder: (ctx, idx) => GCRProductcard.feed(
+                    product: state.productList[idx],
+                  ),
+                );
+              },
             ),
           ),
         ],
