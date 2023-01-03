@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../business_logic/blocs/blocs.dart';
 import '../../../widgets/widgets.dart';
 import '../../../pages/pages.dart';
 
@@ -37,17 +38,22 @@ class ProductsView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          // Expanded(
-          //   child: GridView.builder(
-          //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //       crossAxisCount: 4,
-          //       mainAxisSpacing: 10,
-          //       crossAxisSpacing: 10,
-          //       childAspectRatio: 425 / 450,
-          //     ),
-          //     itemBuilder: (ctx, idx) => const GCRProductcard.feed(price: 5.39),
-          //   ),
-          // ),
+          Expanded(
+            child: BlocBuilder<ProductListBloc, ProductListState>(
+              builder: (ctx, state) => GridView.builder(
+                itemCount: state.productList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 425 / 450,
+                ),
+                itemBuilder: (ctx, idx) => GCRProductcard.feed(
+                  product: state.productList[idx],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
