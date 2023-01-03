@@ -8,7 +8,9 @@ class ProductListState extends Equatable {
   });
 
   factory ProductListState.initial() {
-    return const ProductListState(productList: <Product>[]);
+    return const ProductListState(
+      productList: <Product>[],
+    );
   }
 
   @override

@@ -42,19 +42,27 @@ class DashboardView extends StatelessWidget {
             SizedBox(
               height: 285,
               child: BlocBuilder<ProductListBloc, ProductListState>(
-                builder: (ctx, state) => ListView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                    state.productList.length < 4 ? state.productList.length : 4,
-                    (idx) => Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
-                      child: GCRProductcard.feed(
-                        product: state.productList[idx],
+                builder: (ctx, state) {
+                  if (state.productList.isEmpty) {
+                    return const GCRMessageCard();
+                  }
+
+                  return ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(
+                      state.productList.length < 4
+                          ? state.productList.length
+                          : 4,
+                      (idx) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        child: GCRProductcard.feed(
+                          product: state.productList[idx],
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 50),

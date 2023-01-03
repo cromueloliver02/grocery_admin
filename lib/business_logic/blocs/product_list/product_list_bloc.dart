@@ -21,9 +21,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
     ProductListStarted event,
     Emitter<ProductListState> emit,
   ) {
-    productRepository.loadProducts().listen((productList) {
-      add(ProductListUpdated(productList: productList));
-    });
+    productRepository.loadProducts().listen(
+      (List<Product> productList) {
+        add(ProductListUpdated(productList: productList));
+      },
+    );
   }
 
   void _onProductListUpdated(
