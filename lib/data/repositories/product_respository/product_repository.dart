@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import '../../../data/services/product_service.dart';
+import '../../../data/services/services.dart';
+import '../../../data/models/models.dart';
 import '../../../utils/utils.dart';
-
-import 'base_product_repository.dart';
+import './base_product_repository.dart';
 
 class ProductRepository extends BaseProductRepository {
   final ProductService productService;
@@ -11,6 +11,11 @@ class ProductRepository extends BaseProductRepository {
   ProductRepository({
     required this.productService,
   });
+
+  @override
+  Stream<List<Product>> loadProducts() {
+    return productService.loadProducts();
+  }
 
   @override
   Future<void> postProduct({

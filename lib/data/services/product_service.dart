@@ -9,13 +9,23 @@ import '../../utils/utils.dart';
 const _uuid = Uuid();
 
 class ProductService {
-  final FirebaseFirestore firestore;
-  final FirebaseStorage storage;
+  final FirebaseFirestore _firestore;
+  final FirebaseStorage _storage;
 
   ProductService({
-    required this.firestore,
-    required this.storage,
-  });
+    required FirebaseFirestore firestore,
+    required FirebaseStorage storage,
+  })  : _firestore = firestore,
+        _storage = storage;
+
+  Stream<List<Product>> loadProducts() {
+    return _firestore
+        .collection(kProductsCollectionPath)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => Product.fromDoc(doc)).toList();
+    });
+  }
 
   Future<void> postProduct({
     required String name,
@@ -27,7 +37,7 @@ class ProductService {
   }) async {
     try {
       final Reference imageRef =
-          storage.ref('product_images/${_uuid.v4()}.jpg');
+          _storage.ref('product_images/${_uuid.v4()}.jpg');
 
       await imageRef.putData(image);
       final String imageUrl = await imageRef.getDownloadURL();
@@ -41,7 +51,7 @@ class ProductService {
         'measureUnit': measureUnit.name,
       };
 
-      await firestore.collection(kProductsCollectionPath).doc().set(payload);
+      await _firestore.collection(kProductsCollectionPath).doc().set(payload);
     } on FirebaseException catch (err) {
       throw GCRError(
         code: err.code,

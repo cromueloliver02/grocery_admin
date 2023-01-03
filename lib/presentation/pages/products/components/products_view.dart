@@ -37,17 +37,17 @@ class ProductsView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 425 / 450,
-              ),
-              itemBuilder: (ctx, idx) => const GCRProductcard.feed(price: 5.39),
-            ),
-          ),
+          // Expanded(
+          //   child: GridView.builder(
+          //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //       crossAxisCount: 4,
+          //       mainAxisSpacing: 10,
+          //       crossAxisSpacing: 10,
+          //       childAspectRatio: 425 / 450,
+          //     ),
+          //     itemBuilder: (ctx, idx) => const GCRProductcard.feed(price: 5.39),
+          //   ),
+          // ),
         ],
       ),
     );
