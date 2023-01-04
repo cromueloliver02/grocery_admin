@@ -15,6 +15,10 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     required this.imagePickerRepository,
   }) : super(ProductFormState.initial());
 
+  void toggleOnSale([bool? onSale]) {
+    emit(state.copyWith(onSale: onSale ?? !state.onSale));
+  }
+
   void changeCategory(String? value) {
     emit(state.copyWith(selectedCategory: value));
   }

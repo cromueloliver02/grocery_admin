@@ -1,0 +1,89 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:validators/validators.dart';
+
+import '../../../../business_logic/cubits/cubits.dart';
+
+class SalePriceField extends StatefulWidget {
+  const SalePriceField({
+    super.key,
+    required this.controller,
+    required this.originalPrice,
+    required this.currentSalePrice,
+  });
+
+  final TextEditingController controller;
+  final double? originalPrice;
+  final double? currentSalePrice;
+
+  @override
+  State<SalePriceField> createState() => _SalePriceFieldState();
+}
+
+class _SalePriceFieldState extends State<SalePriceField> {
+  String? _salePriceValidator(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Sale Price is required.';
+    }
+
+    if (!isNumeric(value.trim())) {
+      return 'Please enter a valid sale price';
+    }
+
+    // if (originalPrice <= double.parse(value)) {
+    //   return 'Please enter a lower price';
+    // }
+
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return BlocBuilder<ProductFormCubit, ProductFormState>(
+      builder: (ctx, state) => Column(
+        children: [
+          Row(
+            children: [
+              Checkbox(
+                value: state.onSale,
+                onChanged: (value) {
+                  ctx.read<ProductFormCubit>().toggleOnSale();
+                },
+              ),
+              Text(
+                'On sale?',
+                style: textTheme.headline6,
+              ),
+            ],
+          ),
+          if (state.onSale)
+            TextFormField(
+              controller: widget.controller,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+              ],
+              decoration: const InputDecoration(
+                labelText: 'Sale Price in \$',
+                filled: true,
+                fillColor: Colors.white,
+                border: InputBorder.none,
+              ),
+              validator: _salePriceValidator,
+            ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    context
+        .read<ProductFormCubit>()
+        .toggleOnSale(widget.currentSalePrice != null);
+  }
+}

@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:validators/validators.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../../business_logic/cubits/cubits.dart';
 import '../../../../utils/utils.dart';
+import './price_field.dart';
+import './sale_price_field.dart';
 import './category_dropdown.dart';
 import './measure_unit_selector.dart';
 import './image_picker.dart';
@@ -27,6 +27,7 @@ class ProductForm extends StatefulWidget {
 class _ProductFormState extends State<ProductForm> {
   late final TextEditingController _nameController;
   late final TextEditingController _priceController;
+  late final TextEditingController _salePriceController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _onSubmit(BuildContext ctx) async {
@@ -40,58 +41,64 @@ class _ProductFormState extends State<ProductForm> {
       showMessageToast('Please select an image');
     }
 
-    if (form != null && form.validate() && selectedImage != null) {
-      if (widget.product == null) {
-        ctx.read<ProductCubit>().createProduct(
-              name: _nameController.text,
-              image: productFormState.selectedImage!,
-              category: productFormState.selectedCategory,
-              price: double.parse(_priceController.text),
-              salePrice: null, // TODO
-              measureUnit: productFormState.selectedMeasureUnit,
-            );
-      } else {
-        final ProductCubit productCubit = ctx.read<ProductCubit>();
-        final Product product = widget.product!;
-        final Uint8List image = await urlToBytes(product.imageUrl);
+    if (!(form != null && form.validate() && selectedImage != null)) return;
 
-        if (product.name == _nameController.text &&
-            listEquals(image, productFormState.selectedImage!) &&
-            product.category == productFormState.selectedCategory &&
-            product.price == double.parse(_priceController.text) &&
-            product.measureUnit == productFormState.selectedMeasureUnit) {
-          showMessageToast('You didn\'t change any field');
-          return;
-        }
+    if (widget.product == null) {
+      ctx.read<ProductCubit>().createProduct(
+            name: _nameController.text,
+            image: productFormState.selectedImage!,
+            category: productFormState.selectedCategory,
+            price: double.parse(_priceController.text),
+            salePrice: _salePriceController.text.isEmpty
+                ? null
+                : double.parse(_salePriceController.text),
+            measureUnit: productFormState.selectedMeasureUnit,
+          );
+    } else {
+      final ProductCubit productCubit = ctx.read<ProductCubit>();
+      final Product product = widget.product!;
+      final Uint8List image = await urlToBytes(product.imageUrl);
 
-        productCubit.updateProduct(
-          id: product.id,
-          name: product.name == _nameController.text
-              ? null
-              : _nameController.text,
-          oldImageUrl: product.imageUrl,
-          newImage: listEquals(image, productFormState.selectedImage!)
-              ? null
-              : productFormState.selectedImage!,
-          category: product.category == productFormState.selectedCategory
-              ? null
-              : productFormState.selectedCategory,
-          price: product.price == double.parse(_priceController.text)
-              ? null
-              : double.parse(_priceController.text),
-          salePrice: null, // TODO
-          measureUnit:
-              product.measureUnit == productFormState.selectedMeasureUnit
-                  ? null
-                  : productFormState.selectedMeasureUnit,
-        );
+      if (product.name == _nameController.text &&
+          listEquals(image, productFormState.selectedImage!) &&
+          product.category == productFormState.selectedCategory &&
+          product.price == double.parse(_priceController.text) &&
+          (_salePriceController.text.isEmpty
+              ? true
+              : product.salePrice == double.parse(_salePriceController.text)) &&
+          product.measureUnit == productFormState.selectedMeasureUnit) {
+        showMessageToast('You didn\'t change any field');
+        return;
       }
+
+      productCubit.updateProduct(
+        id: product.id,
+        name:
+            product.name == _nameController.text ? null : _nameController.text,
+        oldImageUrl: product.imageUrl,
+        newImage: listEquals(image, productFormState.selectedImage!)
+            ? null
+            : productFormState.selectedImage!,
+        category: product.category == productFormState.selectedCategory
+            ? null
+            : productFormState.selectedCategory,
+        price: product.price == double.parse(_priceController.text)
+            ? null
+            : double.parse(_priceController.text),
+        salePrice: product.salePrice == double.parse(_salePriceController.text)
+            ? null
+            : double.parse(_salePriceController.text),
+        measureUnit: product.measureUnit == productFormState.selectedMeasureUnit
+            ? null
+            : productFormState.selectedMeasureUnit,
+      );
     }
   }
 
   void _clearForm(BuildContext ctx) {
     _nameController.clear();
     _priceController.clear();
+    _salePriceController.clear();
     ctx.read<ProductFormCubit>().clearAll();
   }
 
@@ -110,18 +117,6 @@ class _ProductFormState extends State<ProductForm> {
 
     if (value.trim().length < 6) {
       return 'Please enter a valid name';
-    }
-
-    return null;
-  }
-
-  String? _priceValidator(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Price is required.';
-    }
-
-    if (!isNumeric(value.trim())) {
-      return 'Please enter a valid price';
     }
 
     return null;
@@ -162,19 +157,15 @@ class _ProductFormState extends State<ProductForm> {
               Expanded(
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _priceController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9]'))
-                      ],
-                      decoration: const InputDecoration(
-                        labelText: 'Price in \$',
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: InputBorder.none,
-                      ),
-                      validator: _priceValidator,
+                    PriceField(controller: _priceController),
+                    const SizedBox(height: 10),
+                    SalePriceField(
+                      controller: _salePriceController,
+                      originalPrice: widget.product == null
+                          ? null
+                          : double.parse(
+                              _priceController.text), // widget.product!.price
+                      currentSalePrice: widget.product?.salePrice,
                     ),
                     const SizedBox(height: 10),
                     BlocBuilder<ProductFormCubit, ProductFormState>(
@@ -214,7 +205,6 @@ class _ProductFormState extends State<ProductForm> {
           BlocListener<ProductCubit, ProductState>(
             listener: (ctx, state) {
               if (state.status == ProductFormStatus.success) {
-                _clearForm(ctx);
                 Navigator.pop(context);
               }
             },
@@ -237,6 +227,9 @@ class _ProductFormState extends State<ProductForm> {
 
     _nameController = TextEditingController(text: product?.name);
     _priceController = TextEditingController(text: product?.price.toString());
+    _salePriceController = TextEditingController(
+      text: product?.salePrice != null ? product?.salePrice.toString() : '',
+    );
 
     if (product != null) {
       _onCategoryChanged(product.category);
@@ -249,6 +242,7 @@ class _ProductFormState extends State<ProductForm> {
   void dispose() {
     _nameController.dispose();
     _priceController.dispose();
+    _salePriceController.dispose();
     super.dispose();
   }
 }
