@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:validators/validators.dart';
 
+import '../../../../business_logic/cubits/cubits.dart';
+
 class PriceField extends StatelessWidget {
   const PriceField({
     super.key,
@@ -9,6 +11,10 @@ class PriceField extends StatelessWidget {
   });
 
   final TextEditingController controller;
+
+  void _onPriceChanged(BuildContext ctx, {required double value}) {
+    ctx.read<ProductFormCubit>().changePrice(value);
+  }
 
   String? _priceValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -35,6 +41,9 @@ class PriceField extends StatelessWidget {
         border: InputBorder.none,
       ),
       validator: _priceValidator,
+      onChanged: (value) {
+        _onPriceChanged(context, value: double.parse(value));
+      },
     );
   }
 }

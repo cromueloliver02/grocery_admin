@@ -48,7 +48,7 @@ class _ProductFormState extends State<ProductForm> {
             name: _nameController.text,
             image: productFormState.selectedImage!,
             category: productFormState.selectedCategory,
-            price: double.parse(_priceController.text),
+            price: productFormState.price,
             salePrice: _salePriceController.text.isEmpty
                 ? null
                 : double.parse(_salePriceController.text),
@@ -65,7 +65,7 @@ class _ProductFormState extends State<ProductForm> {
       if (product.name == _nameController.text &&
           listEquals(image, productFormState.selectedImage!) &&
           product.category == productFormState.selectedCategory &&
-          product.price == double.parse(_priceController.text) &&
+          product.price == productFormState.price &&
           (_salePriceController.text.isEmpty
               ? true
               : product.salePrice == double.parse(_salePriceController.text)) &&
@@ -86,7 +86,7 @@ class _ProductFormState extends State<ProductForm> {
         category: product.category == productFormState.selectedCategory
             ? null
             : productFormState.selectedCategory,
-        price: product.price == double.parse(_priceController.text)
+        price: product.price == productFormState.price
             ? null
             : double.parse(_priceController.text),
         salePrice: product.salePrice == salePriceFromController
@@ -106,6 +106,10 @@ class _ProductFormState extends State<ProductForm> {
     _priceController.clear();
     _salePriceController.clear();
     ctx.read<ProductFormCubit>().clearAll();
+  }
+
+  void _onPriceChanged(double value) {
+    context.read<ProductFormCubit>().changePrice(value);
   }
 
   void _onCategoryChanged(String? value) {
@@ -165,21 +169,15 @@ class _ProductFormState extends State<ProductForm> {
                   children: [
                     PriceField(controller: _priceController),
                     const SizedBox(height: 10),
-                    BlocListener<ProductFormCubit, ProductFormState>(
+                    BlocConsumer<ProductFormCubit, ProductFormState>(
                       listener: (ctx, state) {
                         if (!state.onSale) _salePriceController.clear();
                       },
-                      child: SalePriceField(
+                      builder: (ctx, state) => SalePriceField(
                         controller: _salePriceController,
-                        // originalPrice: widget.product == null
-                        //     ? null
-                        //     : double.parse(_priceController.text),
                         originalPrice: widget.product == null
-                            ? _priceController.text.isEmpty
-                                ? null
-                                : double.parse(_priceController.text)
+                            ? state.price
                             : widget.product!.price,
-                        // widget.product!.price
                         currentSalePrice: widget.product?.salePrice,
                       ),
                     ),
@@ -248,6 +246,7 @@ class _ProductFormState extends State<ProductForm> {
     );
 
     if (product != null) {
+      _onPriceChanged(product.price);
       _onCategoryChanged(product.category);
       _onMeasureUnitChanged(product.measureUnit);
       context.read<ProductFormCubit>().setImage(product.imageUrl);

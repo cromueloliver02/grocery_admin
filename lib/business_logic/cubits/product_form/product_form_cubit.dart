@@ -19,6 +19,10 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     emit(state.copyWith(onSale: onSale ?? !state.onSale));
   }
 
+  void changePrice(double value) {
+    emit(state.copyWith(price: value));
+  }
+
   void changeCategory(String? value) {
     emit(state.copyWith(selectedCategory: value));
   }
