@@ -175,7 +175,9 @@ class _ProductFormState extends State<ProductForm> {
                         //     ? null
                         //     : double.parse(_priceController.text),
                         originalPrice: widget.product == null
-                            ? double.parse(_priceController.text)
+                            ? _priceController.text.isEmpty
+                                ? null
+                                : double.parse(_priceController.text)
                             : widget.product!.price,
                         // widget.product!.price
                         currentSalePrice: widget.product?.salePrice,
