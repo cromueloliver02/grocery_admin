@@ -84,18 +84,19 @@ class _ProductFeedCard extends StatelessWidget {
                         if (product.salePrice == null)
                           Text(
                             '\$${product.price}',
-                            style: textTheme.headline4,
+                            style: textTheme.headline3,
                           ),
                         if (product.salePrice != null) ...[
                           Text(
                             '\$${product.salePrice}',
-                            style: textTheme.headline4,
+                            style: textTheme.headline3,
                           ),
                           const SizedBox(width: 5),
                           Text(
                             '\$${product.price}',
-                            style: textTheme.headline6!.copyWith(
-                              color: Colors.grey[600],
+                            style: textTheme.headline5!.copyWith(
+                              color: Colors.grey[900],
+                              fontWeight: FontWeight.w500,
                               decoration: TextDecoration.lineThrough,
                             ),
                           ),

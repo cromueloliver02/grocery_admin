@@ -30,9 +30,10 @@ class _SalePriceFieldState extends State<SalePriceField> {
       return 'Please enter a valid sale price';
     }
 
-    // if (originalPrice <= double.parse(value)) {
-    //   return 'Please enter a lower price';
-    // }
+    if (widget.originalPrice != null &&
+        widget.originalPrice! <= double.parse(value)) {
+      return 'Please enter a lower price than original price';
+    }
 
     return null;
   }

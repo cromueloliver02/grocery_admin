@@ -93,7 +93,7 @@ class ProductService {
       if (newImageUrl != null) payload.addAll({'imageUrl': newImageUrl});
       if (category != null) payload.addAll({'category': category});
       if (price != null) payload.addAll({'price': price});
-      if (salePrice != null) payload.addAll({'salePrice': salePrice});
+      payload.addAll({'salePrice': salePrice});
       if (measureUnit != null) {
         payload.addAll({'measureUnit': measureUnit.name});
       }

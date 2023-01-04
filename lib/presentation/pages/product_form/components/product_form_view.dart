@@ -32,7 +32,7 @@ class ProductFormView extends StatelessWidget {
           child: Center(
             child: Container(
               color: theme.cardColor,
-              width: 800,
+              width: 900,
               padding: const EdgeInsets.all(20),
               child: ProductForm(product: product),
             ),

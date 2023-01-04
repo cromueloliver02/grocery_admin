@@ -58,6 +58,9 @@ class _ProductFormState extends State<ProductForm> {
       final ProductCubit productCubit = ctx.read<ProductCubit>();
       final Product product = widget.product!;
       final Uint8List image = await urlToBytes(product.imageUrl);
+      final double? salePriceFromController = _salePriceController.text.isEmpty
+          ? null
+          : double.parse(_salePriceController.text);
 
       if (product.name == _nameController.text &&
           listEquals(image, productFormState.selectedImage!) &&
@@ -66,6 +69,7 @@ class _ProductFormState extends State<ProductForm> {
           (_salePriceController.text.isEmpty
               ? true
               : product.salePrice == double.parse(_salePriceController.text)) &&
+          product.salePrice == salePriceFromController &&
           product.measureUnit == productFormState.selectedMeasureUnit) {
         showMessageToast('You didn\'t change any field');
         return;
@@ -85,9 +89,11 @@ class _ProductFormState extends State<ProductForm> {
         price: product.price == double.parse(_priceController.text)
             ? null
             : double.parse(_priceController.text),
-        salePrice: product.salePrice == double.parse(_salePriceController.text)
+        salePrice: product.salePrice == salePriceFromController
             ? null
-            : double.parse(_salePriceController.text),
+            : _salePriceController.text.isEmpty
+                ? null
+                : double.parse(_salePriceController.text),
         measureUnit: product.measureUnit == productFormState.selectedMeasureUnit
             ? null
             : productFormState.selectedMeasureUnit,
@@ -159,13 +165,21 @@ class _ProductFormState extends State<ProductForm> {
                   children: [
                     PriceField(controller: _priceController),
                     const SizedBox(height: 10),
-                    SalePriceField(
-                      controller: _salePriceController,
-                      originalPrice: widget.product == null
-                          ? null
-                          : double.parse(
-                              _priceController.text), // widget.product!.price
-                      currentSalePrice: widget.product?.salePrice,
+                    BlocListener<ProductFormCubit, ProductFormState>(
+                      listener: (ctx, state) {
+                        if (!state.onSale) _salePriceController.clear();
+                      },
+                      child: SalePriceField(
+                        controller: _salePriceController,
+                        // originalPrice: widget.product == null
+                        //     ? null
+                        //     : double.parse(_priceController.text),
+                        originalPrice: widget.product == null
+                            ? double.parse(_priceController.text)
+                            : widget.product!.price,
+                        // widget.product!.price
+                        currentSalePrice: widget.product?.salePrice,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     BlocBuilder<ProductFormCubit, ProductFormState>(
