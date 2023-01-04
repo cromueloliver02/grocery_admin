@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../data/services/services.dart';
+import '../../../data/models/models.dart';
 import '../../../data/repositories/repositories.dart';
 import '../../../business_logic/cubits/cubits.dart';
 import '../../../utils/utils.dart';
@@ -13,20 +14,27 @@ class ProductFormPage extends StatelessWidget {
   static const id = '/product-form';
 
   static Route<void> route(RouteSettings settings) {
+    final Product? product = settings.arguments as Product?;
+
     return MaterialPageRoute(
       settings: settings,
-      builder: (ctx) => const ProductFormPage(),
+      builder: (ctx) => ProductFormPage(product: product),
     );
   }
 
-  const ProductFormPage({super.key});
+  const ProductFormPage({
+    super.key,
+    required this.product,
+  });
+
+  final Product? product;
 
   void _productListener(BuildContext ctx, ProductState state) {
-    if (state.status == ProductStatus.success) {
-      showMessageToast('Product successfully created');
+    if (state.status == ProductFormStatus.success) {
+      showMessageToast('Product saved successfully');
     }
 
-    if (state.status == ProductStatus.failure) {
+    if (state.status == ProductFormStatus.failure) {
       showErrorDialog(ctx, error: state.error);
     }
   }
@@ -66,7 +74,7 @@ class ProductFormPage extends StatelessWidget {
         ],
         child: BlocListener<ProductCubit, ProductState>(
           listener: _productListener,
-          child: const ProductFormView(),
+          child: ProductFormView(product: product),
         ),
       ),
     );

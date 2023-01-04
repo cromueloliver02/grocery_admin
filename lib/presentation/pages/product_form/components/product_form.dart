@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:validators/validators.dart';
 
+import '../../../../data/models/models.dart';
 import '../../../../business_logic/cubits/cubits.dart';
 import '../../../../utils/utils.dart';
 import './category_dropdown.dart';
@@ -11,7 +13,12 @@ import './image_viewer.dart';
 import './bottom_action_buttons.dart';
 
 class ProductForm extends StatefulWidget {
-  const ProductForm({super.key});
+  const ProductForm({
+    super.key,
+    required this.product,
+  });
+
+  final Product? product;
 
   @override
   State<ProductForm> createState() => _ProductFormState();
@@ -34,14 +41,51 @@ class _ProductFormState extends State<ProductForm> {
     }
 
     if (form != null && form.validate() && selectedImage != null) {
-      ctx.read<ProductCubit>().postProduct(
-            name: _nameController.text,
-            image: productFormState.selectedImage!,
-            category: productFormState.selectedCategory,
-            price: double.parse(_priceController.text),
-            salePrice: null,
-            measureUnit: productFormState.selectedMeasureUnit,
-          );
+      if (widget.product == null) {
+        ctx.read<ProductCubit>().createProduct(
+              name: _nameController.text,
+              image: productFormState.selectedImage!,
+              category: productFormState.selectedCategory,
+              price: double.parse(_priceController.text),
+              salePrice: null, // TODO
+              measureUnit: productFormState.selectedMeasureUnit,
+            );
+      } else {
+        final ProductCubit productCubit = ctx.read<ProductCubit>();
+        final Product product = widget.product!;
+        final Uint8List image = await urlToBytes(product.imageUrl);
+
+        if (product.name == _nameController.text &&
+            listEquals(image, productFormState.selectedImage!) &&
+            product.category == productFormState.selectedCategory &&
+            product.price == double.parse(_priceController.text) &&
+            product.measureUnit == productFormState.selectedMeasureUnit) {
+          showMessageToast('You didn\'t change any field');
+          return;
+        }
+
+        productCubit.updateProduct(
+          id: product.id,
+          name: product.name == _nameController.text
+              ? null
+              : _nameController.text,
+          oldImageUrl: product.imageUrl,
+          newImage: listEquals(image, productFormState.selectedImage!)
+              ? null
+              : productFormState.selectedImage!,
+          category: product.category == productFormState.selectedCategory
+              ? null
+              : productFormState.selectedCategory,
+          price: product.price == double.parse(_priceController.text)
+              ? null
+              : double.parse(_priceController.text),
+          salePrice: null, // TODO
+          measureUnit:
+              product.measureUnit == productFormState.selectedMeasureUnit
+                  ? null
+                  : productFormState.selectedMeasureUnit,
+        );
+      }
     }
   }
 
@@ -169,9 +213,13 @@ class _ProductFormState extends State<ProductForm> {
           const SizedBox(height: 30),
           BlocListener<ProductCubit, ProductState>(
             listener: (ctx, state) {
-              if (state.status == ProductStatus.success) _clearForm(ctx);
+              if (state.status == ProductFormStatus.success) {
+                _clearForm(ctx);
+                Navigator.pop(context);
+              }
             },
             child: BottomActionButtons(
+              isCreate: widget.product == null,
               onSubmit: () => _onSubmit(context),
               onClearForm: _clearForm,
             ),
@@ -184,8 +232,17 @@ class _ProductFormState extends State<ProductForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _priceController = TextEditingController();
+
+    final Product? product = widget.product;
+
+    _nameController = TextEditingController(text: product?.name);
+    _priceController = TextEditingController(text: product?.price.toString());
+
+    if (product != null) {
+      _onCategoryChanged(product.category);
+      _onMeasureUnitChanged(product.measureUnit);
+      context.read<ProductFormCubit>().setImage(product.imageUrl);
+    }
   }
 
   @override

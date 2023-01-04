@@ -68,7 +68,7 @@ class _ProductFeedCard extends StatelessWidget {
                       boxFit: BoxFit.contain,
                     ),
                   ),
-                  const GCRPopupMenuButtons(),
+                  GCRPopupMenuButtons(product: product),
                 ],
               ),
               Padding(

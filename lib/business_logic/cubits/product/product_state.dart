@@ -1,7 +1,7 @@
 part of 'product_cubit.dart';
 
 class ProductState extends Equatable {
-  final ProductStatus status;
+  final ProductFormStatus status;
   final GCRError error;
 
   const ProductState({
@@ -11,7 +11,7 @@ class ProductState extends Equatable {
 
   factory ProductState.initial() {
     return const ProductState(
-      status: ProductStatus.initial,
+      status: ProductFormStatus.initial,
       error: GCRError(),
     );
   }
@@ -23,7 +23,7 @@ class ProductState extends Equatable {
   String toString() => 'ProductState(status: $status, error: $error)';
 
   ProductState copyWith({
-    ProductStatus? status,
+    ProductFormStatus? status,
     GCRError? error,
   }) {
     return ProductState(

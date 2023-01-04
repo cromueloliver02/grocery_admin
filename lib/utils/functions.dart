@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +30,12 @@ void showMessageToast(String message) {
     webBgColor: 'grey',
     webPosition: 'center',
   );
+}
+
+Future<Uint8List> urlToBytes(String imageUrl) async {
+  http.Response response = await http.get(Uri.parse(imageUrl));
+
+  return response.bodyBytes;
 }
 
 String formatDateTime(DateTime dateTime) {

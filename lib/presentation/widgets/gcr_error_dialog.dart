@@ -26,16 +26,18 @@ class GCRErrorDialog extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            error.code,
+            'Error: ${error.code}',
             style: textTheme.headline4,
           ),
         ],
       ),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             error.plugin,
-            style: textTheme.bodyText1,
+            style: textTheme.headline6,
           ),
           const SizedBox(height: 10),
           Text(

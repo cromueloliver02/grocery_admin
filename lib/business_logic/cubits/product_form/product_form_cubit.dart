@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -26,6 +27,16 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     final Uint8List? image = await imagePickerRepository.pickImage();
 
     emit(state.copyWith(selectedImage: () => image));
+  }
+
+  void setImage(String imageUrl) async {
+    try {
+      final Uint8List image = await urlToBytes(imageUrl);
+
+      emit(state.copyWith(selectedImage: () => image));
+    } catch (err) {
+      debugPrint(err.toString());
+    }
   }
 
   void clearImage() => emit(state.copyWith(selectedImage: () => null));

@@ -18,7 +18,7 @@ class ProductRepository extends BaseProductRepository {
   }
 
   @override
-  Future<void> postProduct({
+  Future<void> createProduct({
     required String name,
     required Uint8List image,
     required String category,
@@ -27,9 +27,36 @@ class ProductRepository extends BaseProductRepository {
     required MeasureUnit measureUnit,
   }) async {
     try {
-      await productService.postProduct(
+      await productService.createProduct(
         name: name,
         image: image,
+        category: category,
+        price: price,
+        salePrice: salePrice,
+        measureUnit: measureUnit,
+      );
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateProduct({
+    required String id,
+    required String? name,
+    required String oldImageUrl,
+    required Uint8List? newImage,
+    required String? category,
+    required double? price,
+    required double? salePrice,
+    required MeasureUnit? measureUnit,
+  }) async {
+    try {
+      await productService.updateProduct(
+        id: id,
+        name: name,
+        oldImageUrl: oldImageUrl,
+        newImage: newImage,
         category: category,
         price: price,
         salePrice: salePrice,
