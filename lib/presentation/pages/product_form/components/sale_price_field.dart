@@ -21,7 +21,7 @@ class SalePriceField extends StatefulWidget {
 }
 
 class _SalePriceFieldState extends State<SalePriceField> {
-  void _onSalePriceChanged(BuildContext ctx, {required double value}) {
+  void _onSalePriceChanged(BuildContext ctx, {required double? value}) {
     ctx.read<ProductFormCubit>().changeSalePrice(value);
   }
 
@@ -51,11 +51,16 @@ class _SalePriceFieldState extends State<SalePriceField> {
         children: [
           Row(
             children: [
-              Checkbox(
-                value: state.onSale,
-                onChanged: (value) {
-                  ctx.read<ProductFormCubit>().toggleOnSale();
+              BlocListener<ProductFormCubit, ProductFormState>(
+                listener: (ctx, state) {
+                  if (!state.onSale) _onSalePriceChanged(ctx, value: null);
                 },
+                child: Checkbox(
+                  value: state.onSale,
+                  onChanged: (value) {
+                    ctx.read<ProductFormCubit>().toggleOnSale();
+                  },
+                ),
               ),
               Text(
                 'On sale?',
