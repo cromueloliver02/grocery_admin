@@ -119,4 +119,22 @@ class ProductService {
       );
     }
   }
+
+  Future<void> deleteProduct(String id) async {
+    try {
+      await _firestore.collection(kProductsCollectionPath).doc(id).delete();
+    } on FirebaseException catch (err) {
+      throw GCRError(
+        code: err.code,
+        message: err.message!,
+        plugin: err.plugin,
+      );
+    } catch (err) {
+      throw GCRError(
+        code: 'Exception',
+        message: err.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
 }

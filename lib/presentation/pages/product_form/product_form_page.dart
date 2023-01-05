@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../data/services/services.dart';
@@ -41,37 +39,16 @@ class ProductFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<ProductRepository>(
-          create: (ctx) => ProductRepository(
-            productService: ProductService(
-              firestore: FirebaseFirestore.instance,
-              storage: FirebaseStorage.instance,
-            ),
-          ),
+    return RepositoryProvider<ImagePickerRepository>(
+      create: (ctx) => ImagePickerRepository(
+        imagePickerService: ImagePickerService(
+          imagePicker: ImagePicker(),
         ),
-        RepositoryProvider<ImagePickerRepository>(
-          create: (ctx) => ImagePickerRepository(
-            imagePickerService: ImagePickerService(
-              imagePicker: ImagePicker(),
-            ),
-          ),
+      ),
+      child: BlocProvider<ProductFormCubit>(
+        create: (ctx) => ProductFormCubit(
+          imagePickerRepository: ctx.read<ImagePickerRepository>(),
         ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<ProductCubit>(
-            create: (ctx) => ProductCubit(
-              productRespository: ctx.read<ProductRepository>(),
-            ),
-          ),
-          BlocProvider<ProductFormCubit>(
-            create: (ctx) => ProductFormCubit(
-              imagePickerRepository: ctx.read<ImagePickerRepository>(),
-            ),
-          ),
-        ],
         child: BlocListener<ProductCubit, ProductState>(
           listener: _productListener,
           child: ProductFormView(product: product),

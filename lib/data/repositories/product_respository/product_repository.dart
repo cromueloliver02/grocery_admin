@@ -66,4 +66,13 @@ class ProductRepository extends BaseProductRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> deleteProduct(String id) async {
+    try {
+      await productService.deleteProduct(id);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

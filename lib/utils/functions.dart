@@ -18,6 +18,21 @@ void showErrorDialog(
   );
 }
 
+Future<bool?> showWarningDialog(
+  BuildContext ctx, {
+  required String title,
+  required String message,
+}) {
+  return showDialog<bool>(
+    context: ctx,
+    barrierDismissible: false,
+    builder: (ctx) => GCRWarningDialog(
+      title: title,
+      message: message,
+    ),
+  );
+}
+
 void showMessageToast(String message) {
   Fluttertoast.showToast(
     msg: message,

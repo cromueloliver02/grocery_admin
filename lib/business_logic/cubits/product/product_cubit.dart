@@ -81,4 +81,21 @@ class ProductCubit extends Cubit<ProductState> {
       debugPrint(state.toString());
     }
   }
+
+  void deleteProduct({required String id}) async {
+    emit(state.copyWith(status: ProductFormStatus.loading));
+
+    try {
+      await productRespository.deleteProduct(id);
+
+      emit(state.copyWith(status: ProductFormStatus.success));
+    } on GCRError catch (err) {
+      emit(state.copyWith(
+        status: ProductFormStatus.failure,
+        error: err,
+      ));
+
+      debugPrint(state.toString());
+    }
+  }
 }

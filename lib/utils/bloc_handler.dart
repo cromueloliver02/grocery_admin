@@ -24,6 +24,11 @@ class BlocHandler {
         productRepository: ctx.read<ProductRepository>(),
       )..add(ProductListStarted()),
     ),
+    BlocProvider<ProductCubit>(
+      create: (ctx) => ProductCubit(
+        productRespository: ctx.read<ProductRepository>(),
+      ),
+    ),
     BlocProvider<ThemeCubit>(
       create: (ctx) => ThemeCubit(),
     ),

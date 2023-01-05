@@ -25,4 +25,6 @@ abstract class BaseProductRepository {
     required double? salePrice,
     required MeasureUnit? measureUnit,
   });
+
+  Future<void> deleteProduct(String id);
 }

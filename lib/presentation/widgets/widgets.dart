@@ -6,3 +6,4 @@ export './gcr_popup_menu_button.dart';
 export './gcr_loading_overlay.dart';
 export './gcr_message_card.dart';
 export './gcr_error_dialog.dart';
+export './gcr_warning_dialog.dart';

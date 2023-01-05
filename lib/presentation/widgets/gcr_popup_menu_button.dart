@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../business_logic/cubits/cubits.dart';
 import '../../data/models/models.dart';
 import '../pages/pages.dart';
 import '../../utils/utils.dart';
@@ -15,13 +16,23 @@ class GCRPopupMenuButtons extends StatelessWidget {
   void _onSelected(
     BuildContext ctx, {
     required PopupMenuItemType popupMenuItemType,
-  }) {
+  }) async {
+    final ProductCubit productCubit = ctx.read<ProductCubit>();
+
     if (popupMenuItemType == PopupMenuItemType.edit) {
       Navigator.pushNamed(ctx, ProductFormPage.id, arguments: product);
     }
 
     if (popupMenuItemType == PopupMenuItemType.delete) {
-      // delete product
+      final bool? response = await showWarningDialog(
+        ctx,
+        title: 'Delete Product',
+        message: 'Are you sure you want to delete this product?',
+      );
+
+      if (response != null && response) {
+        productCubit.deleteProduct(id: product!.id);
+      }
     }
   }
 
