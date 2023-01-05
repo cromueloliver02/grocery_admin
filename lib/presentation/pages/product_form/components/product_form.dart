@@ -84,9 +84,7 @@ class _ProductFormState extends State<ProductForm> {
         price: product.price == productFormState.price
             ? null
             : double.parse(_priceController.text),
-        salePrice: product.salePrice == productFormState.salePrice
-            ? null
-            : productFormState.salePrice,
+        salePrice: product.salePrice ?? productFormState.salePrice,
         measureUnit: product.measureUnit == productFormState.selectedMeasureUnit
             ? null
             : productFormState.selectedMeasureUnit,
