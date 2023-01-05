@@ -89,12 +89,14 @@ class ProductService {
         newImageUrl = await newImageRef.getDownloadURL();
       }
 
-      final Map<String, dynamic> payload = {};
+      final Map<String, dynamic> payload = {
+        'salePrice': salePrice,
+        'updatedAt': Timestamp.now(),
+      };
       if (name != null) payload.addAll({'name': name});
       if (newImageUrl != null) payload.addAll({'imageUrl': newImageUrl});
       if (category != null) payload.addAll({'category': category});
       if (price != null) payload.addAll({'price': price});
-      payload.addAll({'salePrice': salePrice});
       if (measureUnit != null) {
         payload.addAll({'measureUnit': measureUnit.name});
       }
