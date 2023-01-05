@@ -49,18 +49,13 @@ class _ProductFormState extends State<ProductForm> {
             image: productFormState.selectedImage!,
             category: productFormState.selectedCategory,
             price: productFormState.price,
-            salePrice: _salePriceController.text.isEmpty
-                ? null
-                : double.parse(_salePriceController.text),
+            salePrice: productFormState.salePrice,
             measureUnit: productFormState.selectedMeasureUnit,
           );
     } else {
       final ProductCubit productCubit = ctx.read<ProductCubit>();
       final Product product = widget.product!;
       final Uint8List image = await urlToBytes(product.imageUrl);
-      final double? salePriceFromController = _salePriceController.text.isEmpty
-          ? null
-          : double.parse(_salePriceController.text);
 
       if (product.name == _nameController.text &&
           listEquals(image, productFormState.selectedImage!) &&
@@ -69,7 +64,7 @@ class _ProductFormState extends State<ProductForm> {
           (_salePriceController.text.isEmpty
               ? true
               : product.salePrice == double.parse(_salePriceController.text)) &&
-          product.salePrice == salePriceFromController &&
+          product.salePrice == productFormState.salePrice &&
           product.measureUnit == productFormState.selectedMeasureUnit) {
         showMessageToast('You didn\'t change any field');
         return;
@@ -89,11 +84,9 @@ class _ProductFormState extends State<ProductForm> {
         price: product.price == productFormState.price
             ? null
             : double.parse(_priceController.text),
-        salePrice: product.salePrice == salePriceFromController
+        salePrice: product.salePrice == productFormState.salePrice
             ? null
-            : _salePriceController.text.isEmpty
-                ? null
-                : double.parse(_salePriceController.text),
+            : productFormState.salePrice,
         measureUnit: product.measureUnit == productFormState.selectedMeasureUnit
             ? null
             : productFormState.selectedMeasureUnit,
@@ -110,6 +103,10 @@ class _ProductFormState extends State<ProductForm> {
 
   void _onPriceChanged(double value) {
     context.read<ProductFormCubit>().changePrice(value);
+  }
+
+  void _onSalePriceChanged(double? value) {
+    context.read<ProductFormCubit>().changeSalePrice(value);
   }
 
   void _onCategoryChanged(String? value) {
@@ -165,39 +162,44 @@ class _ProductFormState extends State<ProductForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Column(
-                  children: [
-                    PriceField(controller: _priceController),
-                    const SizedBox(height: 10),
-                    BlocConsumer<ProductFormCubit, ProductFormState>(
-                      listener: (ctx, state) {
-                        if (!state.onSale) _salePriceController.clear();
-                      },
-                      builder: (ctx, state) => SalePriceField(
+                child: BlocConsumer<ProductFormCubit, ProductFormState>(
+                  listener: (ctx, state) {
+                    if (!state.onSale) _salePriceController.clear();
+                  },
+                  builder: (ctx, state) => Column(
+                    children: [
+                      PriceField(
+                        controller: _priceController,
+                        currentSalePrice: widget.product == null
+                            ? state.salePrice
+                            : widget.product!.salePrice,
+                      ),
+                      const SizedBox(height: 10),
+                      SalePriceField(
                         controller: _salePriceController,
                         originalPrice: widget.product == null
                             ? state.price
                             : widget.product!.price,
                         currentSalePrice: widget.product?.salePrice,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    BlocBuilder<ProductFormCubit, ProductFormState>(
-                      builder: (ctx, state) => Column(
-                        children: [
-                          CategoryDropdown(
-                            selectedCategory: state.selectedCategory,
-                            onCategoryChanged: _onCategoryChanged,
-                          ),
-                          const SizedBox(height: 15),
-                          MeasureUnitSelector(
-                            selectedMeasureUnit: state.selectedMeasureUnit,
-                            onMeasureUnitChanged: _onMeasureUnitChanged,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                      const SizedBox(height: 10),
+                      BlocBuilder<ProductFormCubit, ProductFormState>(
+                        builder: (ctx, state) => Column(
+                          children: [
+                            CategoryDropdown(
+                              selectedCategory: state.selectedCategory,
+                              onCategoryChanged: _onCategoryChanged,
+                            ),
+                            const SizedBox(height: 15),
+                            MeasureUnitSelector(
+                              selectedMeasureUnit: state.selectedMeasureUnit,
+                              onMeasureUnitChanged: _onMeasureUnitChanged,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -247,6 +249,7 @@ class _ProductFormState extends State<ProductForm> {
 
     if (product != null) {
       _onPriceChanged(product.price);
+      _onSalePriceChanged(product.salePrice);
       _onCategoryChanged(product.category);
       _onMeasureUnitChanged(product.measureUnit);
       context.read<ProductFormCubit>().setImage(product.imageUrl);

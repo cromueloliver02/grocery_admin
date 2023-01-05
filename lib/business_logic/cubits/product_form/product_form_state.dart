@@ -2,6 +2,7 @@ part of 'product_form_cubit.dart';
 
 class ProductFormState extends Equatable {
   final double price;
+  final double? salePrice;
   final bool onSale;
   final String selectedCategory;
   final MeasureUnit selectedMeasureUnit;
@@ -9,6 +10,7 @@ class ProductFormState extends Equatable {
 
   const ProductFormState({
     required this.price,
+    required this.salePrice,
     required this.onSale,
     required this.selectedCategory,
     required this.selectedMeasureUnit,
@@ -18,6 +20,7 @@ class ProductFormState extends Equatable {
   factory ProductFormState.initial() {
     return const ProductFormState(
       price: 0.0,
+      salePrice: null,
       onSale: false,
       selectedCategory: 'Fruits',
       selectedMeasureUnit: MeasureUnit.kg,
@@ -29,6 +32,7 @@ class ProductFormState extends Equatable {
   List<Object?> get props {
     return [
       price,
+      salePrice,
       onSale,
       selectedCategory,
       selectedMeasureUnit,
@@ -38,11 +42,12 @@ class ProductFormState extends Equatable {
 
   @override
   String toString() {
-    return 'ProductFormState(price: $price, onSale: $onSale, selectedCategory: $selectedCategory, selectedMeasureUnit: $selectedMeasureUnit, selectedImage: $selectedImage)';
+    return 'ProductFormState(price: $price, salePrice: $salePrice, onSale: $onSale, selectedCategory: $selectedCategory, selectedMeasureUnit: $selectedMeasureUnit, selectedImage: $selectedImage)';
   }
 
   ProductFormState copyWith({
     double? price,
+    double? Function()? salePrice,
     bool? onSale,
     String? selectedCategory,
     MeasureUnit? selectedMeasureUnit,
@@ -50,6 +55,7 @@ class ProductFormState extends Equatable {
   }) {
     return ProductFormState(
       price: price ?? this.price,
+      salePrice: salePrice != null ? salePrice() : this.salePrice,
       onSale: onSale ?? this.onSale,
       selectedCategory: selectedCategory ?? this.selectedCategory,
       selectedMeasureUnit: selectedMeasureUnit ?? this.selectedMeasureUnit,

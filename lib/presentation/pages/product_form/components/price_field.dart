@@ -8,9 +8,11 @@ class PriceField extends StatelessWidget {
   const PriceField({
     super.key,
     required this.controller,
+    required this.currentSalePrice,
   });
 
   final TextEditingController controller;
+  final double? currentSalePrice;
 
   void _onPriceChanged(BuildContext ctx, {required double value}) {
     ctx.read<ProductFormCubit>().changePrice(value);
@@ -23,6 +25,10 @@ class PriceField extends StatelessWidget {
 
     if (!isNumeric(value.trim())) {
       return 'Please enter a valid price';
+    }
+
+    if (currentSalePrice != null && currentSalePrice! >= double.parse(value)) {
+      return 'Please enter a higher price than sale price';
     }
 
     return null;

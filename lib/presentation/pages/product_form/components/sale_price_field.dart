@@ -21,6 +21,10 @@ class SalePriceField extends StatefulWidget {
 }
 
 class _SalePriceFieldState extends State<SalePriceField> {
+  void _onSalePriceChanged(BuildContext ctx, {required double value}) {
+    ctx.read<ProductFormCubit>().changeSalePrice(value);
+  }
+
   String? _salePriceValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Sale Price is required.';
@@ -73,6 +77,9 @@ class _SalePriceFieldState extends State<SalePriceField> {
                 border: InputBorder.none,
               ),
               validator: _salePriceValidator,
+              onChanged: (value) {
+                _onSalePriceChanged(context, value: double.parse(value));
+              },
             ),
         ],
       ),

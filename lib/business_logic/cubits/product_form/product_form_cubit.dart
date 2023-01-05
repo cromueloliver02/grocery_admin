@@ -23,6 +23,10 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     emit(state.copyWith(price: value));
   }
 
+  void changeSalePrice(double? value) {
+    emit(state.copyWith(salePrice: () => value));
+  }
+
   void changeCategory(String? value) {
     emit(state.copyWith(selectedCategory: value));
   }
