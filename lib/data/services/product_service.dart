@@ -49,6 +49,7 @@ class ProductService {
         'price': price,
         'salePrice': salePrice,
         'measureUnit': measureUnit.name,
+        'createdAt': Timestamp.now(),
       };
 
       await _firestore.collection(kProductsCollectionPath).doc().set(payload);
