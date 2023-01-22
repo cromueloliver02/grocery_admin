@@ -18,13 +18,17 @@ class ProductService {
   })  : _firestore = firestore,
         _storage = storage;
 
-  Stream<List<Product>> loadProducts() {
-    return _firestore
-        .collection(kProductsCollectionPath)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) => Product.fromDoc(doc)).toList();
-    });
+  Stream<QuerySnapshot> fetchProducts() {
+    try {
+      final Stream<QuerySnapshot> productQueryStream =
+          _firestore.collection(kProductsCollectionPath).snapshots();
+
+      return productQueryStream;
+    } on FirebaseException catch (err) {
+      throw GCRError.firebaseException(err);
+    } catch (err) {
+      throw GCRError.exception(err);
+    }
   }
 
   Future<void> createProduct({

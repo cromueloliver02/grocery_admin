@@ -4,7 +4,7 @@ import '../../models/models.dart';
 import '../../../utils/utils.dart';
 
 abstract class BaseProductRepository {
-  Stream<List<Product>> loadProducts();
+  Stream<List<Product>> fetchProducts();
 
   Future<void> createProduct({
     required String name,

@@ -8,14 +8,3 @@ abstract class ProductListEvent extends Equatable {
 }
 
 class ProductListStarted extends ProductListEvent {}
-
-class ProductListUpdated extends ProductListEvent {
-  final List<Product> productList;
-
-  const ProductListUpdated({
-    required this.productList,
-  });
-
-  @override
-  List<Object> get props => [productList];
-}

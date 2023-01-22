@@ -3,9 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 import '../../data/models/models.dart';
 import '../presentation/widgets/widgets.dart';
+
+void logError(Object state, GCRError error) {
+  final Logger logger = Logger();
+
+  logger.w('ERROR: $state', error, error.stackTrace);
+}
 
 void showErrorDialog(
   BuildContext ctx, {
