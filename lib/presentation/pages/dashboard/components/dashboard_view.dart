@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../business_logic/blocs/blocs.dart';
 import '../../../../business_logic/cubits/cubits.dart';
 import '../../../widgets/widgets.dart';
+import '../../../../utils/utils.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -81,27 +82,42 @@ class DashboardView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 3),
-                //   child: const GCRProductcard.order(price: 4.38),
-                // ),
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 3),
-                //   child: const GCRProductcard.order(price: 6.82),
-                // ),
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 3),
-                //   child: const GCRProductcard.order(price: 2.97),
-                // ),
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 3),
-                //   child: const GCRProductcard.order(price: 8.86),
-                // ),
-              ],
+            BlocBuilder<OrderListBloc, OrderListState>(
+              builder: (ctx, state) {
+                final OrderListStatus status = state.status;
+
+                if (status == OrderListStatus.initial) {
+                  return const SizedBox.shrink();
+                }
+
+                if (status == OrderListStatus.loading) {
+                  return const GCRLoadingCard();
+                }
+
+                if (status == OrderListStatus.failure) {
+                  return const GCRErrorCard();
+                }
+
+                if (state.order.orderItems.isEmpty) {
+                  return const GCRMessageCard();
+                }
+
+                return ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: List.generate(
+                    state.order.orderItems.length < 4
+                        ? state.order.orderItems.length
+                        : 4,
+                    (idx) => Container(
+                      margin: const EdgeInsets.symmetric(vertical: 3),
+                      child: GCROrderCard(
+                        orderItem: state.order.orderItems[idx],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

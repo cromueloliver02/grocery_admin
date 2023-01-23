@@ -27,10 +27,16 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
 
       await emit.forEach<List<OrderItem>>(
         orderRepository.fetchOrders(),
-        onData: (List<OrderItem> orderItems) => state.copyWith(
-          status: () => OrderListStatus.success,
-          order: () => Order(orderItems: orderItems),
-        ),
+        onData: (List<OrderItem> orderItems) {
+          final List<OrderItem> newOrderItems = orderItems
+            ..sort((OrderItem a, OrderItem b) =>
+                b.createdAt.compareTo(a.createdAt));
+
+          return state.copyWith(
+            status: () => OrderListStatus.success,
+            order: () => Order(orderItems: List<OrderItem>.from(newOrderItems)),
+          );
+        },
         onError: _onError,
       );
     } on GCRError catch (err) {
