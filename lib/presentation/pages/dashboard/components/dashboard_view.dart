@@ -56,7 +56,7 @@ class DashboardView extends StatelessWidget {
                           : 4,
                       (idx) => Container(
                         margin: const EdgeInsets.symmetric(horizontal: 5),
-                        child: GCRProductcard.feed(
+                        child: GCRProductFeedCard(
                           product: state.productList[idx],
                         ),
                       ),

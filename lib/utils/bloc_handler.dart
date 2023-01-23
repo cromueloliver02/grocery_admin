@@ -16,6 +16,16 @@ class BlocHandler {
         ),
       ),
     ),
+    RepositoryProvider<OrderRepository>(
+      create: (ctx) => OrderRepository(
+        userService: UserService(
+          firestore: FirebaseFirestore.instance,
+        ),
+        orderService: OrderService(
+          firestore: FirebaseFirestore.instance,
+        ),
+      ),
+    ),
   ];
 
   final List<BlocProvider> blocProviders = [
@@ -28,6 +38,11 @@ class BlocHandler {
       create: (ctx) => ProductCubit(
         productRespository: ctx.read<ProductRepository>(),
       ),
+    ),
+    BlocProvider<OrderListBloc>(
+      create: (ctx) => OrderListBloc(
+        orderRepository: ctx.read<OrderRepository>(),
+      )..add(OrderListStarted()),
     ),
     BlocProvider<ThemeCubit>(
       create: (ctx) => ThemeCubit(),

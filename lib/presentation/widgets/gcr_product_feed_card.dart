@@ -5,38 +5,8 @@ import '../../data/models/models.dart';
 import './widgets.dart';
 import '../../utils/utils.dart';
 
-class GCRProductcard extends StatelessWidget {
-  const GCRProductcard.feed({
-    super.key,
-    required this.product,
-    this.type = ProductCardType.feed,
-  });
-
-  const GCRProductcard.order({
-    super.key,
-    required this.product,
-    this.type = ProductCardType.order,
-  });
-
-  final Product product;
-  final ProductCardType type;
-
-  @override
-  Widget build(BuildContext context) {
-    if (type == ProductCardType.feed) {
-      return _ProductFeedCard(product: product);
-    }
-
-    if (type == ProductCardType.order) {
-      return _ProductOrderCard(product: product);
-    }
-
-    return const SizedBox.shrink();
-  }
-}
-
-class _ProductFeedCard extends StatelessWidget {
-  const _ProductFeedCard({
+class GCRProductFeedCard extends StatelessWidget {
+  const GCRProductFeedCard({
     Key? key,
     required this.product,
   }) : super(key: key);
@@ -123,65 +93,6 @@ class _ProductFeedCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ProductOrderCard extends StatelessWidget {
-  const _ProductOrderCard({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
-
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
-    return Material(
-      color: theme.cardColor,
-      child: InkWell(
-        onTap: () {},
-        child: Row(
-          children: [
-            const SizedBox(width: 20),
-            SizedBox(
-              width: 125,
-              height: 125,
-              child: FancyShimmerImage(
-                imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
-                boxFit: BoxFit.contain,
-              ),
-            ),
-            const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '12x for \$${product.price}',
-                  style: textTheme.headline6,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'By: Cromuel Barut',
-                  style: textTheme.bodyText2!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  formatDateTime(DateTime.now()),
-                  style: textTheme.bodyText2!.copyWith(
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );

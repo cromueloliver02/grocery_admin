@@ -10,3 +10,5 @@ enum PopupMenuItemType { edit, delete }
 enum ProductListStatus { initial, loading, success, failure }
 
 enum ProductFormStatus { initial, loading, success, failure }
+
+enum OrderListStatus { initial, loading, success, failure }
